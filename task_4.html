@@ -1,0 +1,114 @@
+<h1>Введите данные с помощью кнопки "Добавить число в массив" или с помощью "Enter"</h1>
+<input type="text" id="input1">
+<input type="button" value="Добавить число в массив" onclick="addNumberToArray();">
+<input type="button" value="Показать добавленные числа в массив с индексом" onclick="showArray();">
+<input type="button" value="Показать добавленные числа в массив" onclick="showArray2();">
+<input type="button" value="Показать количество последовательных пар одинаковых элементов" onclick="showOverlap();">
+<div id="result"></div>
+<div id="resultOverlap"></div>
+
+<script>
+    let i = 0;
+    let array = [];
+
+//Функция addNumberToArray(). Срабатывает при нажатии кнопки "Добавить число в массив".
+//Проверяет введенное значение в input, если оно пустое выдаст алерт и вернет 0.
+//Если введенное значение не пустое, то функция поместит его в массив. Обнулит содержимое input.
+//Выводит элементы массива с отступом сверху, в кавычках, с отступом между элементами.
+    function addNumberToArray() {
+        if (document.getElementById("input1").value === "") {
+            alert("Необходимо ввести не пустое значение");
+            return false;
+        } else {
+            array[i] = document.getElementById("input1").value;
+            console.log(`Число: ${array[i]} добавлено в индекс ${i}`);
+            i++;
+            document.getElementById('input1').value = "";
+
+            let arr = "<br>";
+            for (let y = 0; y < array.length; y++) {
+                arr += `"${array[y]}"` + ` `;
+                document.getElementById('result').innerHTML = arr;
+            };
+        }
+
+
+    };
+
+//Функция showArray(). Срабатывает при нажатии кнопки "Показать добавленные числа в массив с индексом".
+//Показывает элементы массива с привяз. уник. идентификатором.
+//Выводит в столбец.
+    function showArray() {
+        let arr = "<br>";
+
+        for (let y = 0; y < array.length; y++) {
+            arr += `Индекс ${y} = ${array[y]}<br>`;
+            document.getElementById('result').innerHTML = arr;
+        };
+    };
+
+//Функция showArray2(). Срабатывает при нажатии кнопки "Показать добавленные числа в массив".
+//Показывает элементы массива с привяз. уник. идентификатором.
+//Выводит в строку.
+    function showArray2() {
+        let arr = "<br>";
+
+        for (let y = 0; y < array.length; y++) {
+            arr += `"${array[y]}"` + ` `;
+            document.getElementById('result').innerHTML = arr;
+        };
+    };
+
+//Событие срабатывает при нажатии "Enter".
+//Проверяет введенное значение в input, если оно пустое выдаст алерт и вернет 0.
+//Если введенное значение не пустое, то функция поместит его в массив. Обнулит содержимое input.
+//Выводит элементы массива с отступом сверху, в кавычках, с отступом между элементами.
+    let input = document.getElementById('input1');
+    input.addEventListener('keyup', (e) => {
+        if (e.keyCode === 13) {
+            if (document.getElementById("input1").value === "") {
+                alert("Необходимо ввести не пустое значение");
+                return false;
+            } else {
+                array[i] = document.getElementById("input1").value;
+                console.log(`Число: ${array[i]} добавлено в индекс ${i}`);
+                i++;
+                document.getElementById('input1').value = "";
+
+            }
+        };
+        let arr = "<br>";
+        for (let y = 0; y < array.length; y++) {
+            arr += `"${array[y]}"` + ` `;
+            document.getElementById('result').innerHTML = arr;
+        };
+    });
+
+//Функция showOverlap() срабатывает при нажатии кнопки "Показать количество последовательных пар одинаковых элементов".
+//Ищет совпадение по каждому соседнему элементу.
+//При нахождении одинаковой пары увеличивает значение переменной k на 1.
+//Выводит на экран кол-во повторений.
+
+    function showOverlap() {
+        let index = 0;
+        let indexGreater = 0;
+        let k = 0;
+
+        while (indexGreater < array.length) {
+            if (array[index] === array[indexGreater + 1]) {
+                index = index + 1;
+                indexGreater = indexGreater + 1;
+                k = k + 1;
+            } else {
+                index = index + 1;
+                indexGreater = indexGreater + 1;
+                k = k + 0;
+            }
+            //console.log(k);
+            document.getElementById('resultOverlap').innerHTML = k;
+        };
+    };
+</script>
+
+<!-- Дан массив из 100 элементов. Требуется вывести количество последовательных пар одинаковых элементов
+Например: 1, 1, 2, 3, 4 -51, 12, 12, 12, -51 (Повторений - 3) -->
